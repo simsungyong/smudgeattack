@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
     img = cv.resize(img, dsize=(600, 900), interpolation=cv.INTER_AREA)
     #template = cv.resize(template, dsize=(600, 900), interpolation=cv.INTER_AREA)
-
+    #d운지
     kernel = np.ones((12,12), np.uint8)
     kernel1 = cv.getStructuringElement(cv.MORPH_ELLIPSE, ksize=(3,3))
     
