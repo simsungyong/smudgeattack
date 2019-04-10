@@ -60,7 +60,7 @@ def img_trim(img, x, y, w, h):
     return img_trim
 
 if __name__ == "__main__":
-    img = cv.imread('/Users/yong/capstone/photo/5.JPG')
+    img = cv.imread('/data/5.JPG')
     #template = cv.imread('data/03_29/confer7.png')
 
     img = cv.resize(img, dsize=(600, 900), interpolation=cv.INTER_AREA)
