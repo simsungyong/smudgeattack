@@ -1,4 +1,5 @@
 import cv2 as cv
+import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 from PIL import Image
@@ -59,6 +60,21 @@ def img_trim(img, x, y, w, h):
     
     return img_trim
 
+
+def draw_lines(img, lines, color=[0, 0, 255], thickness=2): # 선 그리기
+    for line in lines:
+        for x1,y1,x2,y2 in line:
+            cv2.line(img, (x1, y1), (x2, y2), color, thickness)
+            
+def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap): # 허프 변환
+    lines = cv2.HoughLinesP(img, rho, theta, threshold, np.array([]), minLineLength=min_line_len, maxLineGap=max_line_gap)
+    line_img = np.zeros((img.shape[0], img.shape[1],3), dtype=np.uint8)
+    draw_lines(line_img, lines)
+
+    return line_img            
+
+
+
 if __name__ == "__main__":
     img = cv.imread('/Users/yong/capstone/photo/5.JPG')
     #template = cv.imread('data/03_29/confer7.png')
@@ -112,9 +128,18 @@ if __name__ == "__main__":
     
 
     #area = approx[top_left[1]: bottom_right[1], top_left[0]:bottom_right[0]]
+    
+    #cv.drawContours(img, approx , -1, (0,255,0), 10)
+    t_noise = cv.morphologyEx(img_t, cv.MORPH_ERODE, kernel, iterations=1)
 
-    cv.drawContours(img, approx , -1, (0,255,0), 10)
-    cv.imshow("img",img_t)
+    cc = canny(t_noise)
+    
+
+    
+    hough_img = hough_lines(cc, 1, 1 * np.pi/180, 25, 8, 13) # 허프 변환
+    
+    cv.imshow('result',hough_img) # 결과 이미지 출력
+    
 
     cv.waitKey(0)
     
