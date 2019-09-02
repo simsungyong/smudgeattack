@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Sep  2 16:13:05 2019
+
+@author: yong
+"""
+
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import classification_report
+
+#y_true = [1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+#y_pred = [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+
+print(confusion_matrix(y_true, y_pred))
+print(accuracy_score(y_true, y_pred))
+print(precision_score(y_true, y_pred))
+print(classification_report(y_true, y_pred, target_names=['class 0', 'class 1']))
+
+#True Positive: 불량품을 불량품이라고 정확하게 예측
+#True Negative: 정상제품을 정상제품이라고 정확하게 예측
+#False Positive: 불량품을 정상제품이라고 잘못 예측
+#False Negative: 정상제품을 불량품이라고 잘못 예측
+
+from sklearn import metrics
+import numpy as np
+import matplotlib.pyplot as plt
+
+#y_true = [0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+#y_probas = [1.6501526e-04,2.3758231e-02,9.5507073e-01,9.9994993e-01,3.4132874e-05,8.7742100e-04,4.8718689e-06, 1.5993852e-05, 2.2653067e-02, 1.0510751e-02,1.7928366e-02, 6.2833754e-03, 3.8796306e-02, 1.9315884e-01]
+fpr, tpr, thresholds = metrics.roc_curve(y_true, y_probas, pos_label=0)
+
+# Print ROC curve
+plt.plot(tpr,fpr)
+plt.show() 
+
+# Print AUC
+auc = np.trapz(fpr,tpr)
+print('AUC:', auc)
